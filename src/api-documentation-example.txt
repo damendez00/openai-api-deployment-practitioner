@@ -1,0 +1,9 @@
+Endpoint: POST /triage-ticket
+Purpose: Accept sanitized support-ticket text and return a placeholder category and summary.
+Input: JSON body with required field ticket_text.
+Output: JSON body with category and summary.
+Error state: Missing or empty ticket_text returns a controlled validation error.
+Data boundary: Fictional or sanitized text only. No customer systems connected.
+Owner or next reviewer: [Name or team]
+Known limitations: Local-only; placeholder logic; no production auth; no production monitoring; no real classification quality validation.
+Support route: [Team channel or contact]

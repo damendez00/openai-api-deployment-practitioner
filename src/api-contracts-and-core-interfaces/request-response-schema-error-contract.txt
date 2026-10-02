@@ -1,0 +1,39 @@
+Define the request:
+A request contract defines what the caller sends.
+
+The Core Interface and API Contract Plan should include the following:
+
+Workflow requirement
+What workflow does this API interaction support?
+
+Recommended inference interface
+Which inference interface is the strongest starting point, and why?
+
+Interface and state rationale
+How do the inference interface and state approach support workflow, context, tools, structured output, streaming, async, or verification needs?
+
+State and context assumptions
+What context must be supplied or retained? What privacy, ownership, or retention questions exist?
+
+Tool, streaming, async, retry, or idempotency assumptions
+Identify the application executor, pending-job state, original call/result join, timeout and failure behavior, and safe retry conditions. If steering is selected, record the active response reference, revised user direction, accepted/failed events, successor-response checks, and review of prior actions.
+
+Structured-output requirement
+Which mechanism is planned: Structured Outputs or JSON mode with application validation? What schema and non-schema response paths must be handled?
+
+Request contract
+What does the caller send?
+
+Response contract
+What does the API return?
+
+Error states
+What can go wrong, and what should happen next?
+
+Verification tests
+What tests prove the contract behaves as expected?
+
+Open implementation questions
+What must be confirmed before build, recommendation, or broader use?
+
+

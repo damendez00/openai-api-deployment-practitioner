@@ -1,0 +1,27 @@
+governance
+
+what data can the api access?
+what systems can it call?
+which actions require approval?
+who reviews outputs before they affect users, customers, or systems?
+
+evaluation assumptions: what behavior must be tested before the api can be trusted for broader use (qa)
+
+observability assumptions: what must be visible so the team can review behavior, detect issues, troubleshoot failures and decide whether the solution should continue, change, pause or escalate?
+
+- what activity must be visible for technical review?
+- what errors, failures should be reviewable?
+
+short note for prompt:
+
+governance
+what data, source, or action needs approval before pilot?
+
+evaluation
+what behavior must be checked before users rely on the output?
+
+observability
+what signal should the team be able to inspect after release?
+
+prod readiness
+what must be true before the workflow is shown to a broader user group?

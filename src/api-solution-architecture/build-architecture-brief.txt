@@ -1,0 +1,9 @@
+strong api solution architecture brief example: 
+
+Relationship managers spend too much time preparing for client meetings because account context is scattered across CRM notes, support history, internal research, and prior meeting summaries. 
+The first version of the API solution will generate an internal structured pre-call briefing inside the account workspace for relationship manager review. 
+The solution should use approved account context only. It should not make investment recommendations, send customer-facing messages, update CRM records, or take action without approval. 
+The simplest viable pattern is structured output if the account workspace can provide approved context directly. Retrieval remains conditional pending validation of source access, permissions, ownership, and freshness. 
+Tool-based CRM updates are out of scope for the first version. Before build, validate approved sources, user permission boundaries, required response fields, review ownership, logging expectations, and the next request/response contract details. 
+
+Generate an internal pre-call briefing in the account workspace using approved account context, with relationship manger review before use.

@@ -1,0 +1,11 @@
+SecOps checklist
+ Only fictional/sanitized ticket data used during development
+ No real credentials or production tokens in the code
+ Production authentication mechanism defined
+ Authorization and least-privilege access reviewed
+ Secrets management defined
+ Input/data classification completed
+ Sensitive information excluded/redacted from logs
+ Dependencies scanned for known vulnerabilities
+ Threat model/security review completed
+ Security approval obtained before production access

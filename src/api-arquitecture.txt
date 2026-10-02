@@ -1,0 +1,108 @@
+1. define customer problem
+2. define where exactly the api solution should go, the scope of the solution, what it should do and not do and who uses it
+3. make a first version of the api solution, simple so that it just solves the initial pain point
+4. keep in mind customer context and constraints (industry, policies, existing workflows, latency)
+5. if an output can affect customers, systems, buisness records, etc. identify where review or approval is required
+
+example: Relationship managers need a faster way to prepare for client meetings using approved account context. The API solution will generate an internal structured pre-call briefing when a relationship manager opens an account record before a meeting. 
+The first version will summarize approved CRM notes, recent support history, internal research, and previous meeting summaries where access is permitted. The output must remain an internal draft for relationship manager review. 
+The solution will not make investment recommendations, update CRM records, send customer-facing messages, or take action without human review. Source access, permission boundaries, review requirements, and logging expectations must be validated before implementation. 
+
+my api architecture first prompt: our sre team needs a faster way to prepare for postmortems (gathering incident information, implicated teams, incident timeline). the api solution will generate an internal structured pre-postmortem briefing when a sre opens a postmortem record.
+the first version will summarise the incident, and give relevant information based on a form that must be filled out by sres before the postmortems, containing information of the incident such as why the incident happened, how it was mitigated/solved, implicated teams, incident timeline and plans for continuous improvement.
+the current workflow for incident response and managment is, implicated teams of services (sres, devs, service owners, etc.) inform incident with service through teams chat, a teams call is started with copilot transcription and incident is managed in the call with the people with the tecnical context for solving the incident, sres send periodic updates to the teams chat about the incidents status. after the incident has been solved a postmortem is schedueled. key information is present in the teams chat because of the updates, however some information necessary for filling out the pre-postmortem form could be missing. we would like to obtain the necessary information of the incident using the microsoft copilot transcript information.
+the solution as of now will not make recommendations for plans for continuous improvement or fill out the postmortem form. Source access, permission boundaries, review requirements, and logging expectations must be validated before implementation.
+
+integration needs
+
+1. which app or workflow will call the api?
+2. what data, tools, systems must the api access?
+3. which user channel or system will recieve the output
+4. which downstream systems may rely on the response
+5. what review/approval is needed before output action is taken?
+
+pre-call briefing example
+
+{
+  "workflow_trigger": "pre_call_briefing_requested",
+  "caller": "account_workspace",
+  "candidate_request": {
+    "account_id": "required",
+    "user_id": "required",
+    "user_role": "required",
+    "meeting_id": "optional",
+    "provided_context": "optional_if_account_workspace_supplies_approved_context"
+  },
+  "candidate_response": {
+    "status": "draft_ready | needs_review | cannot_generate",
+    "briefing": {
+      "account_summary": "string",
+      "recent_support_themes": ["string"],
+      "prior_meeting_context": ["string"],
+      "preparation_questions": ["string"]
+    },
+    "source_notes": [
+      {
+        "source_type": "crm_notes | support_history | internal_research | meeting_summary",
+        "source_reference": "string",
+        "used_in_briefing": true
+      }
+    ],
+    "review_flags": [
+      "missing_context",
+      "conflicting_context",
+      "recommendation_like_language",
+      "permission_boundary_unclear"
+    ]
+  },
+  "not_yet_decided": [
+    "final_response_schema",
+    "whether_retrieval_is_required",
+    "approved_source_list",
+    "permission_enforcement_approach",
+    "logging_and_retention_rules"
+  ]
+}
+
+
+api architecture paterns:
+
+Pattern                 
+Simple model call       
+Structured output 
+Retrieval-grounded 
+Tool/action 
+Agentic workflow 
+Realtime/multimodal 
+Hybrid 
+
+Adds value when... 
+Request contains all context 
+Downstream review/routing needs fields 
+Approved sources are needed at runtime 
+System status or record changes are needed 
+Multi-step work across systems is needed 
+User context requires audio/image/live interaction 
+One pattern alone is insufficient
+
+New technical decisions it introduces 
+Prompt behavior, request shape, response handling, basic errors 
+Schema fields, malformed output handling, validation rules 
+Source owners, permissions, freshness, retrieval failure behavior 
+Tool contract, execution boundary, approval gate, audit event 
+State, tool sequencing, escalation, monitoring, rollback/handoff 
+Latency, consent, media quality, fallback channel, retention 
+Coordination, compounded failure modes, support ownership 
+
+
+sre pre-postmortem form brief: retrieval-grounded response pattern
+
+pattern justification example: we recommend a structured output pattern, with possible retrival pending source validation, because managers need a
+consistent internal briefing grounded in approved account context. this enables the account workspace to display reviewable fields before a meeting.
+it does not solve source approval, permission boundries, or compliance review. Before build, vaildate whether the app can supply all approved context or
+whether retrival is required.
+
+mapping integration needs and app pattern example:  the first version should use a structured output pattern. the account workspace calls the api, the api uses 
+approved account context, and the response returns a structured briefing for relationship manager review. Tool/action workflows are out of scope because the
+first version should not update CRM, create tasks, or take action without additional approval and audit requirements
+

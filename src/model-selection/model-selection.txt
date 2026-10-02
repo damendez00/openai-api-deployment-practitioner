@@ -1,0 +1,54 @@
+Define task and capability requirements
+
+
+Before you can choose a model, API capability, or solution pattern, you need to understand what the workflow actually requires. In API deployment work, this means translating a customer problem into a technical task, input/output expectation, context requirement, risk profile, and validation need.
+
+
+By the end of this module, you should have the first section of your Model and Capability Selection Rationale: a clear statement of what the API must do, what constraints shape the decision, and what must be validated before recommendation or build.
+
+Turn problem into technical task
+
+Weak statement:
+
+“Use AI to improve support.”
+
+Strong statement:
+
+“The API needs to classify short product-support messages into approved routing categories, return a priority level, and include a short audit reason for support operations.”
+
+Define technical requirements
+
+How many requests are expected per hour, day, or month?Are requests steady, bursty, or seasonal?How long are typical inputs and outputs?Will the workflow use retrieval, tools, or multimodal processing?What growth is expected after pilot?
+
+xA strong technical requirements summary might look like this:
+RequirementDraft answerTaskClassify product-support message and return routing decision.InputShort free-text message from support intake form.OutputStructured fields: routing_label, priority, reason, needs_review.ContextNo approved source dependency for first version.Reasoning depthLow to moderate; classify against known categories.LatencyMust support high-volume support intake; low latency preferred.ThroughputThousands of messages per day.ReliabilityValid structured output; misroutes for high-priority complaints require review.ReviewHuman review when priority is high, the message is ambiguous, or the output falls outside expected labels.Product validationConfirm current model/API surface and structured-output behavior before build.
+
+Define risk and review requirements
+
+A technically plausible selection can still be the wrong recommendation if risk and review requirements are unclear.
+
+A strong risk and review summary might say:
+
+“The first version can use a structured classification pattern if representative testing shows routing accuracy is acceptable, high-priority complaints reliably trigger review, structured output remains valid, and no live order data or approved-source lookup is required. If routing depends on live order status or policy interpretation, the pattern should be reconsidered.” 
+
+A requirements view might look like this:
+Requirement areaWhat the team capturesBusiness outcomeReduce manual triage effort and route support messages more consistently.Workflow taskClassify short inbound support messages and return a routing recommendation.InputShort message text from a support intake form.OutputStructured routing label, priority, short reason, and review flag.ModalityText input and structured text output. No voice, image, or realtime requirement.Reasoning needLow to moderate. Most categories are clear; ambiguous or high-priority cases should trigger review.Context needNo approved source dependency for the first version if categories are already defined in the prompt or application configuration.Latency and throughputThousands of short messages per day; speed and cost matter.Quality thresholdCorrect routing for common categories; high-priority complaints should not be silently misrouted.Review needHuman review for ambiguous, high-priority, or hard-to-classify cases.Validation evidenceRepresentative labeled examples, edge cases, structured-output checks, latency/throughput testing, and review-trigger checks.Product validationConfirm current model, API surface, structured-output behavior, and any relevant limits before build.
+
+build and evaluate a list of model candidates:
+
+diference in cost and efficiency between models when doing the same task
+
+A strong latency and reliability note might say:“The first version should use a synchronous structured response only if testing confirms that routing output can be returned within the customer’s intake experience expectations. If peak traffic increases latency or output validity drops, the design needs fallback behavior such as review routing, queue-based async processing, or a simpler output path for routine cases.”
+
+Safety and validation assumptions  
+
+A more defensible recommendation might say:“Start with the shortlisted model candidate that meets the predefined routing-quality, schema, review-trigger, and latency thresholds with the strongest total task economics. Validate it against representative support messages, including seasonal peaks, ambiguous complaints, and high-priority cases. Estimate task cost using request volume, input and output length, success rate, retries, reviewer correction, and expected growth. Reserve a more capable candidate for ambiguous or high-risk cases only when the evidence shows a material benefit. Define fallback behavior for latency spikes, invalid outputs, or unavailable dependencies.”
+
+Rationale sectionWhat to captureWorkflow taskWhat the API needs to do: classify, extract, generate, summarize, reason, transform, retrieve, act through a tool, or support live/multimodal interaction.Business outcome or customer value signalWhat the customer is trying to improve, such as speed, quality, consistency, risk reduction, customer experience, or operational capacity.Input and output modalityWhat the API receives and returns: text, structured data, image, audio, realtime interaction, multimodal input/output, or structured response fields.Required capabilitiesWhat capability the workflow actually requires, such as structured output, moderate reasoning, source grounding, tool access, realtime interaction, or review support.Relevant contract and interface requirementsRequired fields, output shape, error expectations, state, streaming, async, retry, idempotency, and interface assumptions.Candidate capability patternsThe patterns considered, such as structured classification, retrieval-grounded response, tool-enabled action, realtime or multimodal pattern, agentic workflow, or specialized approach.Recommended patternThe simplest viable pattern that fits the current workflow and evidence.Rejected alternatives and rationaleWhich patterns are not the right first choice and why.Cost, latency, scale, reliability, safety, and review tradeoffsThe tradeoffs the recommendation accepts and why they are appropriate.RisksKnown risks, assumptions, unresolved questions, or cases that could change the recommendation.Validation questionsWhat evidence must be gathered before build, recommendation, pilot, or broader use.Next review areaThe next type of review needed, such as contract/interface, security and data handling, retrieval readiness, tool/action design, validation and guardrails, observability, production readiness, or product documentation review.
+
+Complete the comparison recordAlongside the rationale table, record the incumbent prompt/version, candidate model IDs, supported reasoning settings, approved inputs and tool permissions, and any compatibility changes. For each run, retain the case set, quality and review scores, latency, usage and tool costs, retries, reviewer effort, and whether evidence is observed or still planned. Link a targeted prompt change to the failure it addresses and the regression check. Name the evidence that would reverse the selection.
+
+A concise rationale might look like this:Model Candidate B is recommended as the current baseline for the structured support-routing workflow. It met the predefined task-quality, structured-output, review-trigger, and latency thresholds and had the strongest total cost per successful task among the candidates that passed. 
+
+Candidate A missed the required review behavior, while Candidate C did not improve successful task completion enough to justify its additional latency and cost. Revalidate the exact model IDs, supported behavior, pricing, and limits before build.
+

@@ -1,0 +1,132 @@
+Identify data movement:
+Weak statement:
+The API uses support data and returns a summary.
+
+Stronger statement:
+The API receives support ticket title, description, requester role, priority, product area, and internal notes from the helpdesk system. It generates an internal triage summary and recommended next action. It writes the generated summary back to the ticket record only after staff confirmation. It logs request ID, timestamp, endpoint, status code, latency, and error category. It excludes ticket body, requester details, secrets, and generated narrative from application logs.
+
+Apply data minimization
+
+Authentication vs Authorization
+
+Data boundaryThis section identifies what data the API touches and whether that data creates security, privacy, customer-policy, or minimization questions.
+
+Fields:
+Data touched:
+Highest likely sensitivity:
+Data that should be excluded, masked, redacted, or minimized:
+Logging or retention consideration:
+OpenAI API endpoint or capability:
+Default training and abuse-monitoring treatment verified:
+Application-state retention and “store” behavior:
+Modified Abuse Monitoring or Zero Data Retention status, eligibility, and endpoint limitations:
+Official guidance verified as of:
+Unresolved data owner or classification question:
+Security validation question:
+
+Quality check: This section is strong when it names specific data fields or data categories, not broad labels. It separates abuse monitoring from endpoint-specific application state, records the endpoint or capability, does not assume Modified Abuse Monitoring or Zero Data Retention is enabled, and identifies the owner and current official guidance needed to validate any sensitive-data, logging, retention, or classification uncertainty.Access and secrets boundaryThis section identifies who or what can access the workflow, what permissions are required, and whether credentials are protected appropriately.
+
+Fields:
+Caller or service identity:
+OpenAI organization, project, and environment:
+Caller identity type (user, service account, or other approved workload identity):
+Required permissions:
+RBAC role and API key permissions:
+Permission or access concern:
+Secrets-handling concern:
+Client-side key exposure check:
+Usage monitoring and rotation/revocation owner:
+Environment-separation assumption:
+Security validation question:
+
+Quality check: This section is strong when it separates authentication from authorization, identifies the OpenAI organization and project boundary, states the caller identity type, records the minimum RBAC role and key permissions, confirms that keys are not exposed client-side, separates experimentation, staging, and production, and names the usage-monitoring and rotation or revocation owner.Action and approval boundaryThis section identifies what the API can do automatically, what requires approval, and what should be blocked.
+
+Fields:
+Allowed action:
+Approval-only action:
+Disallowed action:
+Approval or escalation owner:
+Audit evidence required:
+Security validation question:
+
+Quality check: This section is strong when it draws a clear line between generating information and changing a system. System-changing actions, customer-facing actions, and sensitive workflow changes should have explicit approval ownership and evidence.Evidence gap and remediationThis section identifies what evidence is missing and what must change before the workflow can move forward.
+
+Fields:
+Evidence available:
+Evidence missing:
+Required remediation:
+Owner:
+Validation evidence required after remediation:
+
+Quality check: This section is strong when each gap has a named owner, a concrete remediation, and a way to prove the issue has been resolved. Avoid vague statements such as “improve security” or “review later.”Readiness recommendationThis section makes the review actionable.
+
+Fields:
+Recommendation:
+Reason:
+Top blocker or condition:
+Next safe step:
+Handoff owner:
+Evidence that would change the recommendation:
+
+Quality check: This section is strong when the recommendation follows directly from the evidence. Another stakeholder should be able to understand why the workflow is ready, conditionally ready, blocked, or needs escalation, who owns the next action, and what evidence would change the recommendation.
+
+Data boundaryThis section identifies what data the API touches and whether that data creates security, privacy, customer-policy, or minimization questions.
+
+Fields:
+Data touched:
+Highest likely sensitivity:
+Data that should be excluded, masked, redacted, or minimized:
+Logging or retention consideration:
+OpenAI API endpoint or capability:
+Default training and abuse-monitoring treatment verified:
+Application-state retention and “store” behavior:
+Modified Abuse Monitoring or Zero Data Retention status, eligibility, and endpoint limitations:
+Official guidance verified as of:
+Unresolved data owner or classification question:
+Security validation question:
+
+Quality check: This section is strong when it names specific data fields or data categories, not broad labels. It separates abuse monitoring from endpoint-specific application state, records the endpoint or capability, does not assume Modified Abuse Monitoring or Zero Data Retention is enabled, and identifies the owner and current official guidance needed to validate any sensitive-data, logging, retention, or classification uncertainty.Access and secrets boundaryThis section identifies who or what can access the workflow, what permissions are required, and whether credentials are protected appropriately.
+
+Fields:
+Caller or service identity:
+OpenAI organization, project, and environment:
+Caller identity type (user, service account, or other approved workload identity):
+Required permissions:
+RBAC role and API key permissions:
+Permission or access concern:
+Secrets-handling concern:
+Client-side key exposure check:
+Usage monitoring and rotation/revocation owner:
+Environment-separation assumption:
+Security validation question:
+
+Quality check: This section is strong when it separates authentication from authorization, identifies the OpenAI organization and project boundary, states the caller identity type, records the minimum RBAC role and key permissions, confirms that keys are not exposed client-side, separates experimentation, staging, and production, and names the usage-monitoring and rotation or revocation owner.Action and approval boundaryThis section identifies what the API can do automatically, what requires approval, and what should be blocked.
+
+Fields:
+Allowed action:
+Approval-only action:
+Disallowed action:
+Approval or escalation owner:
+Audit evidence required:
+Security validation question:
+
+Quality check: This section is strong when it draws a clear line between generating information and changing a system. System-changing actions, customer-facing actions, and sensitive workflow changes should have explicit approval ownership and evidence.Evidence gap and remediationThis section identifies what evidence is missing and what must change before the workflow can move forward.
+
+Fields:
+Evidence available:
+Evidence missing:
+Required remediation:
+Owner:
+Validation evidence required after remediation:
+
+Quality check: This section is strong when each gap has a named owner, a concrete remediation, and a way to prove the issue has been resolved. Avoid vague statements such as “improve security” or “review later.”Readiness recommendationThis section makes the review actionable.
+
+Fields:
+Recommendation:
+Reason:
+Top blocker or condition:
+Next safe step:
+Handoff owner:
+Evidence that would change the recommendation:
+
+Quality check: This section is strong when the recommendation follows directly from the evidence. Another stakeholder should be able to understand why the workflow is ready, conditionally ready, blocked, or needs escalation, who owns the next action, and what evidence would change the recommendation.

@@ -1,0 +1,23 @@
+An inference api interface is the primary way an app sends work to an openai model and recieves a result.
+
+Use this question to guide the decision:
+What does the workflow need the API interation to do reliably?
+
+For choosing an inference interface (first, and then state approach):
+What does the app need to do?
+Does it need predicatable structured output?
+Does it need tool use?
+Does it need continuity across turns?
+Is the customer starting from an existing implementation that creates compatibility or migration constraints?
+
+Stateful vs stateless 
+
+Streaming vs async: 
+does workflow need a complete response immediately, progressive output as it is generated, or a
+delayed result the client can check later?
+
+structured output:
+weak is Return a summary in json, strong is Return a structured object with issue_summary as a string, urgency as one of low, med, etc, source_ids as an arr
+array of approved source identifiers, recommended_next_action as a string, etc.
+
+idempotency and retries:
